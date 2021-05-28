@@ -32,16 +32,18 @@ function registerUser(req, res)
                                         });
                                     }else{
                                         //cifrar la contraseña  y guardar 
-                                        user.password = params.password;
-                                        user.save((err, userStored)=>{
-                                            if(err) return res.status(500).send({ message: 'error al guardar el usuaio'});
-
-                                            if(userStored){
-                                                res.status(200).send({user: userStored});
-                                            }else{
-                                                res.status(404).send({message: 'no se registro el usuario'});
-                                            }
-                                        });
+                                        bcrypt.hash('myPassword', 10, function(err, hash) {
+                                            user.password = hash;
+                                            user.save((err, userStored)=>{
+                                                if(err) return res.status(500).send({ message: 'error al guardar el usuaio'});
+                                            
+                                                if(userStored){
+                                                    res.status(200).send({user: userStored});
+                                                }else{
+                                                    res.status(404).send({message: 'no se registro el usuario'});
+                                                }
+                                            });
+                                          });
                                     }
                                 });
            

@@ -1,0 +1,10 @@
+.cabecera {
+  color: #fad347 !important;
+  font-weight: 900 !important;
+  font-family: 'Kaushan Script' !important;
+
+}
+
+.cabecera:hover {
+  color: #e6bf13 !important;
+}

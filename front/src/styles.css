@@ -1,0 +1,19 @@
+/* You can add global styles to this file, and also import other style files */
+.navigation{
+  padding: 0px !important;
+  font-family: 'Oswald' !important;
+}
+.navigation .navbar{
+  border-radius: 0px !important;
+  border: none;
+}
+
+
+.nav-link{
+  color: #ffffff !important;
+
+}
+
+.punto{
+  cursor: pointer ;
+}

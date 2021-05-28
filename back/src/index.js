@@ -6,7 +6,7 @@ const cors = require('cors');
 require('./db/database');
 
 //middlewares
-//app.use(cors());
+app.use(cors());
 app.use(express.json());
 
 //cargar ruta
