@@ -5,7 +5,7 @@ const cors = require('cors');
 //conexion a base de datos
 require('./db/database');
 
-//middlewares
+//cors
 app.use(cors());
 app.use(express.json());
 

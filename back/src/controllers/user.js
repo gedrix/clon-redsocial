@@ -1,7 +1,7 @@
 
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+var jwt = require('../jwt/jwt');
 
 
 //*******REGISTRO*********
@@ -31,19 +31,17 @@ function registerUser(req, res)
                                             message: 'error al guardar usuario, ya existe :('
                                         });
                                     }else{
-                                        //cifrar la contraseña  y guardar 
-                                        bcrypt.hash('myPassword', 10, function(err, hash) {
-                                            user.password = hash;
-                                            user.save((err, userStored)=>{
-                                                if(err) return res.status(500).send({ message: 'error al guardar el usuaio'});
-                                            
-                                                if(userStored){
-                                                    res.status(200).send({user: userStored});
-                                                }else{
-                                                    res.status(404).send({message: 'no se registro el usuario'});
-                                                }
-                                            });
-                                          });
+                                        user.password = bcrypt.hashSync(params.password, 8);
+                                        user.save((err, userStored)=>{
+                                            if(err) return res.status(500).send({ message: 'error al guardar el usuario'});
+                                        
+                                            if(userStored){
+                                                res.status(200).send({user: userStored});
+                                            }else{
+                                                res.status(404).send({message: 'no se registro el usuario'});
+                                            }
+                                        });
+
                                     }
                                 });
            
@@ -55,10 +53,32 @@ function registerUser(req, res)
 
 }
 
+//*******LOGIN*********
+function loginUser(req, res)
+{
+     const params = req.body;
+     const email = params.email;
+     const password = params.password;
+    
+     User.findOne ({email: email}, (err, user)=> {
+        if (err) return res.status(500).send({message: 'error en la peticion'});
+        let equals = bcrypt.compareSync(password, user.password);
+        if (equals) 
+        {
+            const token = jwt.createtToken(user);
 
+            return res.status(200).json({token}); 
+        }else{
+             return res.status(401).send({
+                 message: 'Password no coninciden'
+             });
+           
+        }
+    })    
+}
 module.exports = {
     
     registerUser,
-    
+    loginUser
 
 }
