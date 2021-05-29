@@ -18,9 +18,12 @@ export class UserService{
               this.url = GLOBAL.url;
             }
 
+
   registerUser(user:  User): Observable<any>{
     return this.http.post(this.url+'register-user', user);
-
   }
 
+  loginUser(user){
+    return this.http.post<any>(this.url + '/login', user);
+  }
 }

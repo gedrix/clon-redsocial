@@ -24,11 +24,12 @@ function registerUser(req, res)
                                 {email: user.email.toLowerCase()},
                                     {nick: user.nick.toLowerCase()}
                                 ]}).exec((err, users)=>{
-                                    if(err) return res.status(500).send({message: 'error en la peticióon del usuario'});
+                                    if(err) return res.status(500).send({message: 'error en la petición del usuario'});
 
                                     if(users && users.length >= 1){
                                         return res.status(200).send({
-                                            message: 'error al guardar usuario, ya existe :('
+                                            status: 'error',
+                                            message: 'ya existe el usuario :(',
                                         });
                                     }else{
                                         user.password = bcrypt.hashSync(params.password, 8);
@@ -36,10 +37,15 @@ function registerUser(req, res)
                                             if(err) return res.status(500).send({ message: 'error al guardar el usuario'});
                                         
                                             if(userStored){
-                                                res.status(200).send({user: userStored});
-                                            }else{
-                                                res.status(404).send({message: 'no se registro el usuario'});
+                                                //res.status(200).send({user: userStored});
+                                                return res.status(200).send({
+                                                    status: 'succes',
+                                                    message: 'registro correcto'
+                                                });
                                             }
+                                            // }else{
+                                            //     res.status(404).send({message: 'no se registro el usuario'});
+                                            // }
                                         });
 
                                     }
@@ -66,10 +72,10 @@ function loginUser(req, res)
         if (equals) 
         {
             const token = jwt.createtToken(user);
-
             return res.status(200).json({token}); 
         }else{
              return res.status(401).send({
+                status: 'error',
                  message: 'Password no coninciden'
              });
            

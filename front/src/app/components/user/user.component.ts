@@ -4,7 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/services/user.service';
-
+import { pluck, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -45,13 +46,15 @@ export class UserComponent implements OnInit {
       email:this.userForm.get('email')?.value,
       password:this.userForm.get('password')?.value
     }
-
-    this._userService.registerUser(user).subscribe(data =>{
-      this.toastr.success('Correct Registration','Congratulations');
-      this.router.navigate(['/']);
-    },error =>{
-        console.log(error);
+    /*puck para extraer un solo dato mandar dentro del pip alado del tap ejm pluck('status') */
+    this._userService.registerUser(user).pipe(tap(obj =>{
+      if (obj.status =='error') {
+        this.toastr.info(obj.message,'Error');
         this.userForm.reset();
-    })
+      }else{
+        this.toastr.success(obj.message,'Congratulations');
+        this.router.navigate(['/']);
+      }
+    })).subscribe();
   }
 }
