@@ -24,6 +24,6 @@ export class UserService{
   }
 
   loginUser(user){
-    return this.http.post<any>(this.url + '/login', user);
+    return this.http.post<any>(this.url + 'login', user);
   }
 }

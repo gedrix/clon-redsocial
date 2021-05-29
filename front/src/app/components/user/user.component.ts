@@ -20,7 +20,6 @@ export class UserComponent implements OnInit {
     private fb: FormBuilder,
     private router: Router,
     private toastr: ToastrService,
-    private aRouter: ActivatedRoute,
     private _userService: UserService
   ) {
     this.userForm = this.fb.group({
