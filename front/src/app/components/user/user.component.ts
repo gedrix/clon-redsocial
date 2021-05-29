@@ -52,7 +52,7 @@ export class UserComponent implements OnInit {
         this.userForm.reset();
       }else{
         this.toastr.success(obj.message,'Congratulations');
-        this.router.navigate(['/']);
+        this.router.navigate(['login']);
       }
     })).subscribe();
   }

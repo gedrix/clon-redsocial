@@ -22,7 +22,7 @@ function registerUser(req, res)
             //para ver si exite repetidos
             User.find({ $or: [ 
                                 {email: user.email.toLowerCase()},
-                                    {nick: user.nick.toLowerCase()}
+                                {nick: user.nick.toLowerCase()}
                                 ]}).exec((err, users)=>{
                                     if(err) return res.status(500).send({message: 'error en la petición del usuario'});
 
@@ -67,16 +67,18 @@ function loginUser(req, res)
      const password = params.password;
     
      User.findOne ({email: email}, (err, user)=> {
-        if (err) return res.status(500).send({message: 'error en la peticion'});
+        if (err) return res.status(500).send({status: 'error', message: 'error en la peticion'});
         let equals = bcrypt.compareSync(password, user.password);
         if (equals) 
         {
             const token = jwt.createtToken(user);
-            return res.status(200).json({token}); 
+            user.password = undefined; 
+            return res.status(200).json({token, user}); 
         }else{
-             return res.status(401).send({
+             return res.status(200).send({
                 status: 'error',
                  message: 'Password no coninciden'
+
              });
            
         }

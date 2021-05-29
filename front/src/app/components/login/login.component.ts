@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
     email:'',
     password:''
   };
-
+  //public identity;
   constructor(
     private fb: FormBuilder,
     private toastr: ToastrService,
@@ -33,18 +33,20 @@ export class LoginComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    //this.identity = this._userService.getIdentity();
   }
 
   login(){
-    this._userService.loginUser(this.user)
-      .subscribe(
-        res => {
-          console.log(res);
-          localStorage.setItem('token', res.token);
-          this.router.navigate(['/home']);
-        },
-        err => console.log(err)
-      )
+    this._userService.loginUser(this.user).pipe(tap( obj =>{
+
+      if (obj.status == 'error') {
+        this.toastr.info(obj.message,'Error');
+        this.userForm.reset();
+      }else{
+          this.router.navigate(['/']);
+          //location.reload();
+      }
+    })).subscribe()
   }
 
 

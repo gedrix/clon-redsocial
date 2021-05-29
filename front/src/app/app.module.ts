@@ -10,12 +10,14 @@ import { AppComponent } from './app.component';
 import { UserComponent } from './components/user/user.component';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
-    LoginComponent
+    LoginComponent,
+    HomeComponent
 
   ],
   imports: [

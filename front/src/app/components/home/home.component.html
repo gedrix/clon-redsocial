@@ -1,1 +1,30 @@
-<p>home works!</p>
+<div class="row justify-content-center navigation" *ngIf="!(_userService.islogin | async)">
+  <div class="col-lg-3">
+    <a [routerLink]="['/registro']">
+      <div class="card text-white bg-warning mb-3">
+        <div class="card-header">
+          <h4>
+            <span class="fas fa-user-plus"></span> Regístrarse
+          </h4>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Rellena tus datos para formar parte de una gran comunidad</p>
+        </div>
+      </div>
+    </a>
+  </div>
+  <div class="col-lg-3">
+    <a [routerLink]="['/login']">
+      <div class="card text-white bg-success mb-3">
+        <div class="card-header">
+          <h4>
+            <span class="fas fa-sign-in-alt"></span> Iniciar sesión
+          </h4>
+        </div>
+        <div class="card-body">
+          <p class="card-text">Entra con tu email y contraseña</p>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

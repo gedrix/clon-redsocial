@@ -9,18 +9,26 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
         <a class="navbar-brand cabecera" href="#"><h2>{{title}}</h2> </a>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="(_userService.islogin | async) as usuario" >
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Home</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">{{usuario.name}}</a>
+          </li>
 
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="" (click)="logout()">Cerrar Session</a>
+          </li>
         </ul>
-        <ul class="d-flex">
+
+        <ul class="d-flex" *ngIf="!(_userService.islogin | async)">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" routerLink="/register-user">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Login</a>
+            <a class="nav-link active" aria-current="page" routerLink="/login">Login</a>
           </li>
         </ul>
       </div>
