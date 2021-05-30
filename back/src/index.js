@@ -9,8 +9,13 @@ require('./db/database');
 app.use(cors());
 app.use(express.json());
 
+
 //cargar ruta
 app.use('/api', require('./routes/user'));
 
 app.listen(3000);
 console.log('servidor en el puerto', 3000);
+
+
+/***************** */
+

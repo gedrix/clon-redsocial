@@ -1,8 +1,8 @@
 
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-var jwt = require('../jwt/jwt');
-
+const jwt = require('../jwt/jwt');
+const path = require('path');
 
 //*******REGISTRO*********
 function registerUser(req, res)
@@ -84,9 +84,68 @@ function loginUser(req, res)
         }
     })    
 }
+
+//*******EDIT USER*********
+function updateUser(req, res){
+    const userId = req.params.id;
+    const update = req.body;
+
+    //borrar la propiedad password
+    delete update.password; //no quiero editar clave
+
+    if(userId != req.user.sub){
+        return res.status(500).send({message:'no tienes permiso para actualizar los datos del usuario'});
+    }
+
+    User.findByIdAndUpdate(userId, update,{new:true} ,(err, userUpdated)=>{
+        if(err) return res.status(500).send({message: 'error en la peticion'});
+
+        if(!userUpdated) return res.status(404).send({message: 'no se ha podido actualizar el usuario'});
+
+        return res.status(200).send({
+            user: userUpdated
+        });
+    });
+}
+
+//*******IMAGE PROFILE USER*********
+function profileImage(req, res){
+
+    const userId = req.params.id;
+    
+    if (req.file) {
+        if(req.file){
+            const file_path = req.file.path;
+            const file_split = file_path.split('\\');
+            const file_name = file_split[2];
+            const ext_split = req.file.originalname.split('\.');
+            const file_ext = ext_split[1];
+            
+            if(file_ext== 'png' || file_ext== 'jpeg' || file_ext== 'jpg'){
+                User.findByIdAndUpdate(userId, {image:file_name}, (err, userUpdated) => {
+                if(!userUpdated){
+                  res.status(404).send({message: 'No se ha podido actualizar el usuario'});
+                }else{
+                  res.status(200).send({img: userUpdated});
+                }
+              });
+            }else{
+             
+             return removeFilesOfUploads(res, file_path, 'Extensión no válida!!');
+            }
+          }else{
+            res.status(200).send({message: 'No has subido ninguna imagen..'});
+          }
+    }
+}
+
+
 module.exports = {
     
     registerUser,
-    loginUser
+    loginUser,
+    updateUser,
+    profileImage
 
 }
+

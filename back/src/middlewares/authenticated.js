@@ -1,29 +1,22 @@
 const jwt = require('jwt-simple');
 const moment = require('moment');
 const secret ='clavesecretabiensecreta'; //esto puede cambiar con lo que quramos
-
+const payload ='';
+//authorization se envia por header
 exports.ensureAuth = function(req, res, next){
     if(!req.headers.authorization){
         return res.status(403).send({menssage: 'la peticion no tiene la cabecera de autentificaion'});
     }
 
     const token= req.headers.authorization.replace(/['"]+/g, '');
-
-    try {
-        const payload = jwt.decode(token, secret);
-        if(payload.exp <= moment().unix()){
-            return res.status(401).send({
-                menssage: 'el token ha experiado :C'
-            });
-        }
-    } catch (ex) {
+    this.payload = jwt.decode(token, secret);
+    
+    if ( this.payload  == '') {
         return res.status(404).send({
-            menssage: 'el token es valido :v'
+            menssage: 'el token es valido'
         });
     }
-    
-    req.user = payload;
-
+    req.user = this.payload;
     next(); //para que salga del middlaware
 
 }
