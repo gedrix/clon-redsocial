@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { GLOBAL } from './global';
@@ -14,9 +14,10 @@ export class UserService {
   public identity
   public url: string;
   public token;
-
+  public userLocal;
   private variable2 = new Subject<any>();
   private subject = new BehaviorSubject<any>(null);
+
   islogin: Observable<any> = this.subject.asObservable();
   constructor(
     private http: HttpClient,
@@ -49,7 +50,7 @@ export class UserService {
   }
 
 
-    /** Método para sacar el TOKEN del LOCALSTORAGE **/
+  /** Método para sacar el TOKEN del LOCALSTORAGE **/
 	getToken(){
 
 			let token = localStorage.getItem('token');
@@ -59,6 +60,26 @@ export class UserService {
 			this.token = null;
 		}
 		return this.token;
+	}
+
+    	/** Método para sacar los datos del usuario del LOCALSTORAGE **/
+	getIdentity(){
+		let userLocal = JSON.parse(localStorage.getItem('identity'));
+
+		if (userLocal != undefined){
+			this.userLocal = userLocal;
+		}else{
+			this.userLocal = null;
+		}
+		return this.userLocal;
+    }
+
+  updateUser(user: User): Observable<any>{
+		let params = JSON.stringify(user);
+		let headers = new HttpHeaders().set('Content-Type', 'application/json')
+										.set('Authorization', this.getToken());
+
+		return this.http.put(this.url+'update-user/'+user._id, params, {headers:headers});
 	}
 
 

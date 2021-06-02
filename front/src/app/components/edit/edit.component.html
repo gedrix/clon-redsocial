@@ -1,17 +1,18 @@
-<div class="container"  *ngIf="(_userService.islogin | async) as user">
+<div class="container" >
   <h1 class="display-4 navigation" >{{title}}</h1>
   <p class=" navigation">Manten tu información actualizada</p>
   <hr class="my-4">
 
-  <form #userEditForm="ngForm" (ngSubmit)="onSubmit()" class="col-lg-10">
+  <form  #userEditForm="ngForm"  (ngSubmit)="editUser()" class="col-lg-10">
 
     <p>
+      <input type="hidden" name="_id" #name="ngModel" [(ngModel)]="user._id"
+        class="form-control" required disabled="disabled" />
+
         <label class="navigation">Nombre:</label>
         <input type="text" name="name" #name="ngModel" [(ngModel)]="user.name"
         class="form-control" required />
-        <!-- <span *ngIf="!name.valid && name.touched">
-            El campo Nombre es obligatorio.!
-        </span> -->
+
     </p>
 
     <p>
@@ -37,16 +38,10 @@
 
     </p>
 
-    <div>
-      <img src="{{ url + 'get-profile-user/' + user.image }}" class="imgPerfiledit"/>
 
-    </div>
-    <label> Sube tu foto de perfil</label><br>
-    <input type="file" placeholder="Cargar imagen" (change)="fileChangeEvent($event)"/>
-    <br>
     <br>
 
-    <input type="submit" value="ACTUALIZAR" class="btn btn-lg btn-success" [disabled]="!userEditForm.form.valid"/>
+    <input type="submit" value="ACTUALIZAR" class="btn btn-lg btn-success"/>
 
 
 

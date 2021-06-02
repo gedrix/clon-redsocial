@@ -29,7 +29,7 @@ export class UserComponent implements OnInit {
       email: ['', Validators.required],
       password: ['', Validators.required],
 
-    })
+    });
   }
 
   ngOnInit(): void {

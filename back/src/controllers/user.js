@@ -103,6 +103,8 @@ function updateUser(req, res){
         if(!userUpdated) return res.status(404).send({message: 'no se ha podido actualizar el usuario'});
 
         return res.status(200).send({
+            
+            message: 'Datos correctamente modificados',
             user: userUpdated
         });
     });
