@@ -139,13 +139,28 @@ function profileImage(req, res){
     }
 }
 
+function getImgenFile(req, res){
+    var image_file = req.params.imageFile;
+    var path_file = './public/user/'+image_file;
 
+    //fs.exists(path_file, (exists) =>{
+       // if(exists){
+           // res.sendFile(path.resolve(path_file));
+        ///}else{
+        //    return res.status(200).send({message:'no existe la imagen'});
+      //  }
+    //});
+    if (path_file) {
+        res.sendFile(path.resolve(path_file));
+    }
+}
 module.exports = {
     
     registerUser,
     loginUser,
     updateUser,
-    profileImage
+    profileImage,
+    getImgenFile
 
 }
 

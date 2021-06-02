@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/services/user.service';
+import { GLOBAL } from './services/global';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,12 +12,13 @@ import { UserService } from 'src/app/services/user.service';
 export class AppComponent {
   title = 'Red Social';
   public identity;
+  public url: string;
 
   constructor(
     private router: Router,
     public _userService: UserService,
   ){
-
+    this.url = GLOBAL.url;
    }
 
   ngOnInit(){

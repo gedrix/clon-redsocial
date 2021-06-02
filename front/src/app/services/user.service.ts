@@ -13,7 +13,7 @@ import { tap } from 'rxjs/operators';
 export class UserService {
   public identity
   public url: string;
-
+  public token;
 
   private variable2 = new Subject<any>();
   private subject = new BehaviorSubject<any>(null);
@@ -47,4 +47,19 @@ export class UserService {
     localStorage.clear();
     this.subject.next(null);
   }
+
+
+    /** Método para sacar el TOKEN del LOCALSTORAGE **/
+	getToken(){
+
+			let token = localStorage.getItem('token');
+		if (token != undefined){
+			this.token = token;
+		}else{
+			this.token = null;
+		}
+		return this.token;
+	}
+
+
 }

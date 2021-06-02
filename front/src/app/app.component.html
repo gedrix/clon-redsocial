@@ -12,13 +12,34 @@
 
         <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="(_userService.islogin | async) as usuario" >
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">{{usuario.name}}</a>
+            <a class="nav-link active" aria-current="page" href="#"><span class="fas fa-home"></span> Home</a>
           </li>
 
           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"><span class="fas fa-search"></span> Buscar amigos</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"><span class="fas fa-list-ul"></span> Publicaciones </a>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#"><span class="fas fa-envelope"></span> Mensajes </a>
+          </li>
+
+
+
+        </ul>
+        <!--opciones de usuario-->
+        <ul class="nav justify-content-end" *ngIf="(_userService.islogin | async) as usuario">
+
+          <div class="imgPerfil " >
+            <img src="{{ url +'/get-profile-user/' + usuario.image }}" />
+          </div>
+          <li class="nav-item ">
+            <a class="nav-link active" aria-current="page" [routerLink]="['/edit-user']">{{usuario.name}}</a>
+          </li>
+
+          <li class="nav-item ">
             <a class="nav-link active" aria-current="page" href="" (click)="logout()">Cerrar Session</a>
           </li>
         </ul>

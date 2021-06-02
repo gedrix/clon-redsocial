@@ -11,13 +11,15 @@ import { UserComponent } from './components/user/user.component';
 import { CommonModule } from '@angular/common';
 import { LoginComponent } from './components/login/login.component';
 import { HomeComponent } from './components/home/home.component';
+import { EditComponent } from './components/edit/edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    EditComponent
 
   ],
   imports: [

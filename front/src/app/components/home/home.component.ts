@@ -8,7 +8,7 @@ import {UserService} from './../../services/user.service';
 })
 export class HomeComponent implements OnInit {
   public identity;
-
+  public title= 'Disfruta del mejor contenido';
   constructor(
     public _userService: UserService,
   ) {
@@ -17,5 +17,6 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
 
 }

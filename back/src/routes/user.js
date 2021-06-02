@@ -30,7 +30,7 @@ api.post('/login', UserController.loginUser);
 api.put('/update-user/:id', md_auth.ensureAuth, UserController.updateUser);
 api.post('/profile-user/:id', [md_auth.ensureAuth, md_upload.single('image')],UserController.profileImage);
 
-
+api.get('/get-profile-user/:imageFile', UserController.getImgenFile);
 
 
 module.exports = api;
